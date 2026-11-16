@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import ClassImage from "./ClassImage.jsx";
 import { formatDuration, formatPrice, formatSeats } from "../utils/format.js";
 
-function ClassCard({ item, linkState }) {
+function ClassCard({ item, linkState, planAttendees }) {
   const isFull = item.seatsLeft === 0;
 
   return (
@@ -18,6 +18,7 @@ function ClassCard({ item, linkState }) {
         </p>
         <p className="card-price">{formatPrice(item.price)} per person</p>
         <p className={isFull ? "badge badge-full" : "badge badge-open"}>{formatSeats(item.seatsLeft)}</p>
+        {planAttendees > 0 && <p className="in-plan">In your plan: {planAttendees} attendee(s)</p>}
         <Link className="button button-secondary" to={"/classes/" + item.id} state={linkState}>
           View details
         </Link>

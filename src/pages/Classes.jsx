@@ -15,8 +15,13 @@ function readOptions(params) {
   };
 }
 
+function getPlanAttendees(plan, id) {
+  const entry = plan.find((planEntry) => planEntry.id === id);
+  return entry ? entry.attendees : 0;
+}
+
 function Classes() {
-  const { classes, status, reload } = useStudio();
+  const { classes, status, reload, plan } = useStudio();
   const [params, setParams] = useSearchParams();
   const location = useLocation();
   const options = readOptions(params);
@@ -80,7 +85,7 @@ function Classes() {
 
       <ul className="card-grid">
         {visible.map((item) => (
-          <ClassCard key={item.id} item={item} linkState={linkState} />
+          <ClassCard key={item.id} item={item} linkState={linkState} planAttendees={getPlanAttendees(plan, item.id)} />
         ))}
       </ul>
     </section>

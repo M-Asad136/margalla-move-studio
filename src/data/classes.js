@@ -195,7 +195,7 @@ export const classes = [
     instructor: "Ayesha Khan",
     description: "Restorative yoga with props and long holds. A calm way to end the week.",
     bring: "Yoga mat, blanket",
-    image: "/images/weekend-restore-missing.jpg",
+    image: "",
   },
 ];
 

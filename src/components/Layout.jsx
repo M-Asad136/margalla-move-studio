@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
+import DemoPanel from "./DemoPanel.jsx";
 import { useStudio } from "../context/StudioContext.jsx";
 
 function Layout() {
@@ -28,6 +29,7 @@ function Layout() {
 
       <footer className="site-footer">
         <p>Margalla Move Studio, F-7 Markaz, Islamabad. Simulated bookings only.</p>
+        <DemoPanel />
       </footer>
     </>
   );
