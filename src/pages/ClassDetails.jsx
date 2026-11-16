@@ -1,4 +1,5 @@
 import { Link, useLocation, useParams } from "react-router-dom";
+import BookingBox from "../components/BookingBox.jsx";
 import ClassImage from "../components/ClassImage.jsx";
 import StatusMessage from "../components/StatusMessage.jsx";
 import { useStudio } from "../context/StudioContext.jsx";
@@ -6,7 +7,7 @@ import { formatDuration, formatPrice, formatSeats } from "../utils/format.js";
 
 function ClassDetails() {
   const { id } = useParams();
-  const { classes, status, reload } = useStudio();
+  const { classes, status, reload, plan, addToPlan, removeFromPlan } = useStudio();
   const location = useLocation();
   const backLink = "/classes" + (location.state?.from || "");
 
@@ -31,6 +32,8 @@ function ClassDetails() {
       </section>
     );
   }
+
+  const savedEntry = plan.find((entry) => entry.id === item.id);
 
   return (
     <section className="details">
@@ -62,6 +65,14 @@ function ClassDetails() {
 
       <h2>About this class</h2>
       <p>{item.description}</p>
+
+      <BookingBox
+        key={item.id + (savedEntry ? savedEntry.attendees : 0)}
+        item={item}
+        savedAttendees={savedEntry ? savedEntry.attendees : 0}
+        onAdd={addToPlan}
+        onRemove={removeFromPlan}
+      />
     </section>
   );
 }
