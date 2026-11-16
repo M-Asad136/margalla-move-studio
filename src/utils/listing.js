@@ -51,3 +51,26 @@ export function getVisibleClasses(list, options) {
   result = filterByAvailable(result, options.onlyAvailable);
   return sortClasses(result, options.sort);
 }
+
+export function getRelaxSuggestions(list, options) {
+  const suggestions = [];
+
+  if (options.q !== "") {
+    const count = getVisibleClasses(list, { ...options, q: "" }).length;
+    suggestions.push({ name: "q", label: "search text", count });
+  }
+  if (options.category !== "") {
+    const count = getVisibleClasses(list, { ...options, category: "" }).length;
+    suggestions.push({ name: "category", label: "type filter", count });
+  }
+  if (options.level !== "") {
+    const count = getVisibleClasses(list, { ...options, level: "" }).length;
+    suggestions.push({ name: "level", label: "level filter", count });
+  }
+  if (options.onlyAvailable) {
+    const count = getVisibleClasses(list, { ...options, onlyAvailable: false }).length;
+    suggestions.push({ name: "open", label: "seats filter", count });
+  }
+
+  return suggestions.filter((suggestion) => suggestion.count > 0);
+}

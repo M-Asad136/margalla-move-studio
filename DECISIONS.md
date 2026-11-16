@@ -2,23 +2,23 @@
 
 Business: Margalla Move Studio (fitness class booking, Islamabad).
 
-## Decision 1: Keep search, filters and sorting in the URL (interaction and state)
+## Decision 1: Empty results offer a way forward (interaction and state)
 
 | Field | Content |
 | --- | --- |
-| Problem | After opening a class and going back, the list resets and the customer loses their search and filters. |
-| Decision | Search text, type, level, "only classes with seats" and sort are stored in the URL query string with `useSearchParams`. The details link remembers the query and "Back to classes" returns to it. Browser Back also works. |
-| Alternative | Keep the filters only in React state or in context. |
-| Reason | Customers compare several classes before booking. The URL keeps their place on refresh, Back and shared links. |
-| Tradeoff | The URL changes while typing (we use `replace` so history is not filled). Wrong values typed in the URL just show no results. |
-| Code location | `src/pages/Classes.jsx` (`readOptions`, `changeOption`), `src/components/ClassCard.jsx` (`linkState`), `src/pages/ClassDetails.jsx` (`backLink`). |
-| Evidence | Open `/classes`, choose Type = HIIT and Sort = Price low to high, click View details, then click Back to classes or the browser Back button. The same filters and order are still shown. Screenshots: `docs/screenshots/d-2-classes.png`. |
+| Problem | On the CorePower Yoga live schedule, a filter that matches nothing shows "0 classes" and "Check back soon", with no way to change it. The next day had 14 classes. |
+| Decision | When search and filters match nothing, the page lists each active filter with the number of classes that would show if it were removed. One button removes that filter. A separate message appears when the whole timetable is empty. |
+| Alternative | Show only a "Clear filters" button, or a plain "no results" message. |
+| Reason | The customer sees which filter is the problem and fixes it in one click, so the search does not end in a dead end. |
+| Tradeoff | The page recalculates the list once for each active filter, and the wording must stay clear when counts are 1. |
+| Code location | `src/utils/listing.js` (`getRelaxSuggestions`), `src/pages/Classes.jsx` (no-match block, `changeOption`). |
+| Evidence | Open `/classes?category=Boxing&level=Intermediate&open=1`. The page says no classes match and offers "Remove the type filter (4 classes would show)" and "Remove the level filter (1 class would show)". Click the level button and the Boxing list returns. Screenshots: `docs/screenshots/d-3-nomatch.png`, `docs/screenshots/m-3-nomatch.png`. |
 
 ## Decision 2: Show the choosing facts on every class card (information hierarchy and mobile layout)
 
 | Field | Content |
 | --- | --- |
-| Problem | Listings leave out the facts needed to compare options (price, seats left, level), so customers must open every page. |
+| Problem | On the CorePower Yoga live schedule, each row shows only time, a coded class name (for example "C2" or "YS1") and the teacher. Price, level and seats are not shown. |
 | Decision | Each card shows name, type, level, day, time, length, price per person and a text badge for seats left or "Full". On phones (520 px and below) the cards become one column and buttons become full width. |
 | Alternative | Show only name and picture on the card and put the other facts on the details page. |
 | Reason | Price, level and seats decide whether a class is suitable. Showing them at once saves clicks and avoids opening full classes. |
@@ -30,7 +30,7 @@ Business: Margalla Move Studio (fitness class booking, Islamabad).
 
 | Field | Content |
 | --- | --- |
-| Problem | Limits and charges appear late, so customers find out at the end of the booking that they cannot continue. |
+| Problem | On the CorePower Yoga live schedule every class has a Book button, but pressing it shows "You need to be a member or have classes in your account to book this class". The condition appears only after the click. |
 | Decision | The details page lists the attendee limit, the level requirement and the group discount beside the attendees field. The field checks the number live with a specific message and shows the price for this class. The plan page checks the saved plan again against current data. |
 | Alternative | Only show errors when the customer presses Confirm at checkout. |
 | Reason | Customers fix a mistake at the moment they make it and know the real price early. This supports the business goal of completed bookings. |

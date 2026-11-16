@@ -49,7 +49,7 @@ Open "Demo controls" in the page footer, change a setting, then press "Reload ti
 - Loading failure: tick "Make loading fail", reload. An error and a "Try again" button appear. Untick the setting and press "Try again".
 - Changed availability: add HIIT Burn with 3 attendees to the plan, tick "Change seats", reload, open My plan. The conflict is explained and can be fixed with one button. Power Yoga becomes full.
 - Empty timetable: tick "Empty timetable", reload, open Classes.
-- No matches: search for "zumba" on the Classes page.
+- No matches: open `/classes?category=Boxing&level=Intermediate&open=1`. The page offers buttons that remove one filter and shows how many classes would appear.
 - Invalid URL: open `/classes/unknown`.
 - Missing image: the "Weekend Restore" class has no image and shows a text fallback.
 - Long content: "Mat Pilates Foundations" has a long instructor name and description.

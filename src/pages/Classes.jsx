@@ -3,7 +3,7 @@ import ClassCard from "../components/ClassCard.jsx";
 import SearchControls from "../components/SearchControls.jsx";
 import StatusMessage from "../components/StatusMessage.jsx";
 import { useStudio } from "../context/StudioContext.jsx";
-import { getVisibleClasses } from "../utils/listing.js";
+import { getRelaxSuggestions, getVisibleClasses } from "../utils/listing.js";
 
 function readOptions(params) {
   return {
@@ -56,6 +56,7 @@ function Classes() {
 
   const visible = getVisibleClasses(classes, options);
   const linkState = { from: location.search };
+  const suggestions = getRelaxSuggestions(classes, options);
 
   return (
     <section>
@@ -76,7 +77,16 @@ function Classes() {
       {classes.length > 0 && visible.length === 0 && (
         <div className="notice">
           <h2>No classes match your search</h2>
-          <p>Try a different word, another level, or turn off "Only classes with seats".</p>
+          <p>Try one of these changes:</p>
+          <ul>
+            {suggestions.map((suggestion) => (
+              <li key={suggestion.name}>
+                <button type="button" className="button button-secondary" onClick={() => changeOption(suggestion.name, "")}>
+                  Remove the {suggestion.label} ({suggestion.count === 1 ? "1 class" : suggestion.count + " classes"} would show)
+                </button>
+              </li>
+            ))}
+          </ul>
           <button type="button" className="button" onClick={clearFilters}>
             Clear filters
           </button>
