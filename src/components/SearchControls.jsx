@@ -12,7 +12,7 @@ function SearchControls({ values, onChange, onClear }) {
         <input
           id="search"
           type="search"
-          placeholder="Name, instructor or type"
+          placeholder="Name or instructor"
           value={values.q}
           onChange={(event) => onChange("q", event.target.value)}
         />
