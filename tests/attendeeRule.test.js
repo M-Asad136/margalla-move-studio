@@ -25,6 +25,12 @@ test("rejects 0 attendees, one below the limit", () => {
   assert.equal(result.message, "Choose at least 1 attendee.");
 });
 
+test("rejects a decimal number of attendees", () => {
+  const result = checkAttendees(2.5, 10);
+  assert.equal(result.valid, false);
+  assert.equal(result.message, "Enter a whole number of attendees, for example 2.");
+});
+
 test("rejects more attendees than the seats left", () => {
   const result = checkAttendees(3, 2);
   assert.equal(result.valid, false);

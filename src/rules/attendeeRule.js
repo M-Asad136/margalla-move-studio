@@ -2,7 +2,10 @@ export const MIN_ATTENDEES = 1;
 export const MAX_ATTENDEES = 4;
 
 export function checkAttendees(attendees, seatsLeft) {
-  if (!Number.isInteger(attendees) || attendees < MIN_ATTENDEES) {
+  if (!Number.isInteger(attendees)) {
+    return { valid: false, message: "Enter a whole number of attendees, for example 2." };
+  }
+  if (attendees < MIN_ATTENDEES) {
     return { valid: false, message: "Choose at least " + MIN_ATTENDEES + " attendee." };
   }
   if (attendees > MAX_ATTENDEES) {
