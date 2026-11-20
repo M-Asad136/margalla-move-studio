@@ -65,8 +65,13 @@ function Checkout() {
     const newErrors = validateForm(form);
     setErrors(newErrors);
 
-    const hasFormErrors = Object.keys(newErrors).length > 0;
-    if (hasFormErrors || planIssues.length > 0 || experienceIssues.length > 0) {
+    const errorFields = Object.keys(newErrors);
+    if (errorFields.length > 0) {
+      // Move keyboard focus to the first field that needs fixing
+      document.getElementById(errorFields[0])?.focus();
+      return;
+    }
+    if (planIssues.length > 0 || experienceIssues.length > 0) {
       return;
     }
 
@@ -134,6 +139,7 @@ function Checkout() {
               value={form.experience}
               onChange={handleChange}
               aria-invalid={errors.experience ? "true" : "false"}
+              aria-describedby={errors.experience ? "experience-error" : undefined}
             >
               <option value="">Choose a level</option>
               {LEVELS.map((level) => (
@@ -142,7 +148,11 @@ function Checkout() {
                 </option>
               ))}
             </select>
-            {errors.experience && <p className="error-text">Error: {errors.experience}</p>}
+            {errors.experience && (
+              <p id="experience-error" className="error-text">
+                Error: {errors.experience}
+              </p>
+            )}
           </div>
 
           {experienceIssues.length > 0 && (
@@ -150,18 +160,34 @@ function Checkout() {
               <p>Your level does not meet the requirement for:</p>
               <ul>
                 {experienceIssues.map((issue) => (
-                  <li key={issue.id}>{issue.message}</li>
+                  <li key={issue.id}>
+                    <p>{issue.message}</p>
+                    <button type="button" className="button button-secondary" onClick={() => removeFromPlan(issue.id)}>
+                      Remove {knownLines.find((line) => line.id === issue.id).item.name} from plan
+                    </button>
+                  </li>
                 ))}
               </ul>
-              <p>Remove these classes from your plan or choose a higher level if it is true.</p>
+              <p>Remove these classes or choose a higher level if it is true. Your details above are kept.</p>
             </div>
           )}
 
           <div className="field field-check">
-            <input id="terms" type="checkbox" checked={form.terms} onChange={handleTermsChange} />
+            <input
+              id="terms"
+              type="checkbox"
+              checked={form.terms}
+              onChange={handleTermsChange}
+              aria-invalid={errors.terms ? "true" : "false"}
+              aria-describedby={errors.terms ? "terms-error" : undefined}
+            />
             <label htmlFor="terms">I understand this booking is simulated.</label>
           </div>
-          {errors.terms && <p className="error-text">Error: {errors.terms}</p>}
+          {errors.terms && (
+            <p id="terms-error" className="error-text">
+              Error: {errors.terms}
+            </p>
+          )}
 
           <div className="button-row">
             <button type="submit" className="button">

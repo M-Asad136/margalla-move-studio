@@ -19,7 +19,7 @@ function ClassCard({ item, linkState, planAttendees }) {
         <p className="card-price">{formatPrice(item.price)} per person</p>
         <p className={isFull ? "badge badge-full" : "badge badge-open"}>{formatSeats(item.seatsLeft)}</p>
         {planAttendees > 0 && <p className="in-plan">In your plan: {planAttendees} attendee(s)</p>}
-        <Link className="button button-secondary" to={"/classes/" + item.id} state={linkState}>
+        <Link className="button button-secondary" to={"/classes/" + item.id} state={linkState} aria-label={"View details for " + item.name}>
           View details
         </Link>
       </div>
