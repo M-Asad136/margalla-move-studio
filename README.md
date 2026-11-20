@@ -7,8 +7,8 @@ A React website for a fictional fitness studio in Islamabad. Students and office
 
 ## Links
 
-- GitHub: ADD_GITHUB_LINK
-- Deployment: ADD_DEPLOYMENT_LINK
+- GitHub: https://github.com/M-Asad136/margalla-move-studio
+- Deployment: https://margalla-move-studio.vercel.app/
 - Final commit hash: listed in the submitted PDF report (a commit cannot contain its own hash)
 
 ## Commands
