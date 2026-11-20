@@ -2,11 +2,13 @@
 
 Business: Margalla Move Studio (fitness class booking, Islamabad).
 
+Reference website for all three problems: CorePower Yoga live class schedule, https://www.corepoweryoga.com/yoga-schedules/live (checked 16/11/2026 to 20/11/2026 in a window about 500 px wide). Reference screenshots are in `docs/reference/`.
+
 ## Decision 1: Empty results offer a way forward (interaction and state)
 
 | Field | Content |
 | --- | --- |
-| Problem | On the CorePower Yoga live schedule, a filter that matches nothing shows "0 classes" and "Check back soon", with no way to change it. The next day had 14 classes. |
+| Problem | On the CorePower Yoga live schedule (https://www.corepoweryoga.com/yoga-schedules/live), a class-length filter that matches nothing shows "0 classes" and "Check back soon as more classes are added to the schedule!" for each day. The message does not say that the filter caused the empty result and offers no action. The only way out is a small filter chip at the top. With the 75-minute filter on 20/11/2026, every day from Fri 20 to Thu 26 showed this message. Screenshots: `docs/reference/p2-empty-filter-60min-2026-11-16.jpg`, `docs/reference/p2-empty-filter-75min-2026-11-20.jpg`. |
 | Decision | When search and filters match nothing, the page lists each active filter with the number of classes that would show if it were removed. One button removes that filter. A separate message appears when the whole timetable is empty. |
 | Alternative | Show only a "Clear filters" button, or a plain "no results" message. |
 | Reason | The customer sees which filter is the problem and fixes it in one click, so the search does not end in a dead end. |
@@ -18,7 +20,7 @@ Business: Margalla Move Studio (fitness class booking, Islamabad).
 
 | Field | Content |
 | --- | --- |
-| Problem | On the CorePower Yoga live schedule, each row shows only time, a coded class name (for example "C2" or "YS1") and the teacher. Price, level and seats are not shown. |
+| Problem | On the CorePower Yoga live schedule, each row shows only time, a coded class name (for example "C2" or "YS1") and the teacher. Price, level and seats are not shown. Screenshot: `docs/reference/p1-listing-2026-11-16.jpg`. |
 | Decision | Each card shows name, type, level, day, time, length, price per person and a text badge for seats left or "Full". On phones (520 px and below) the cards become one column and buttons become full width. |
 | Alternative | Show only name and picture on the card and put the other facts on the details page. |
 | Reason | Price, level and seats decide whether a class is suitable. Showing them at once saves clicks and avoids opening full classes. |
@@ -30,7 +32,7 @@ Business: Margalla Move Studio (fitness class booking, Islamabad).
 
 | Field | Content |
 | --- | --- |
-| Problem | On the CorePower Yoga live schedule every class has a Book button, but pressing it shows "You need to be a member or have classes in your account to book this class". The condition appears only after the click. |
+| Problem | On the CorePower Yoga live schedule every class has a Book button, but pressing it shows "You need to be a member or have classes in your account to book this class". The condition appears only after the click. Screenshot: `docs/reference/p3-book-signin-2026-11-17.jpg`. |
 | Decision | The details page lists the attendee limit, the level requirement and the group discount beside the attendees field. The field checks the number live with a specific message and shows the price for this class. The plan page checks the saved plan again against current data. |
 | Alternative | Only show errors when the customer presses Confirm at checkout. |
 | Reason | Customers fix a mistake at the moment they make it and know the real price early. This supports the business goal of completed bookings. |

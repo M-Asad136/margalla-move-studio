@@ -9,7 +9,7 @@ A React website for a fictional fitness studio in Islamabad. Students and office
 
 - GitHub: ADD_GITHUB_LINK
 - Deployment: ADD_DEPLOYMENT_LINK
-- Final commit hash: ADD_FINAL_COMMIT_HASH
+- Final commit hash: listed in the submitted PDF report (a commit cannot contain its own hash)
 
 ## Commands
 
@@ -20,7 +20,13 @@ npm run build
 npm test
 ```
 
-`npm test` runs `node --test` (Node's built-in test runner).
+`npm test` runs `node --test` (Node's built-in test runner). The test file `tests/attendeeRule.test.js` checks `checkAttendees` from `src/rules/attendeeRule.js`, the same function the details page and plan page use. It has 7 cases: a normal value (2), exactly the limit (4), above the limit (5), below the limit (0), a decimal (2.5), more attendees than seats left, and a full class.
+
+`npm run preview` serves the production build from `dist` after `npm run build`.
+
+## Reference website
+
+All three investigated problems come from the CorePower Yoga live class schedule: https://www.corepoweryoga.com/yoga-schedules/live. The screenshots are in `docs/reference/` and the decisions are in `DECISIONS.md`.
 
 ## Business rules
 
@@ -54,6 +60,8 @@ Open "Demo controls" in the page footer, change a setting, then press "Reload ti
 - Missing image: the "Weekend Restore" class has no image and shows a text fallback.
 - Long content: "Mat Pilates Foundations" has a long instructor name and description.
 - Invalid form input: submit the checkout form with a wrong email, phone or name; other valid answers stay in the fields.
+- Level conflict: add HIIT Extreme (Advanced) to the plan, go to checkout and choose Intermediate. The class is listed with a "Remove HIIT Extreme from plan" button, and the other form answers stay.
+- Invalid attendee number: on `/classes/hiit-burn` type 5 (above the limit), 0 (below the limit) or 2.5 (not a whole number). Each shows its own message and the Add button is disabled.
 - Restored selection: the plan is saved in local storage and checked again on every visit.
 
 ## Simulated operations
